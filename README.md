@@ -44,18 +44,26 @@ Later in the project, kidney data from the Tartu University Hospital (TUH) was i
 *Please describe the results of testing and validating the technological solution.*
 
 In our experiments, Vox2Vox performed better than U-Net, producing more accurate and anatomically plausible deformations.
-
+Below we provide the visual results of our experiments.
 
 <p align='center'>
     <img src='./figures/Picture1.png' alt='Figure 1' width='800'/>
 </p>
 <p align="center>"><em>Comparison of Dense Displacement Fields (DDF) produced by CorrField, Vox2Vox, and U-Net. The color of DDF shows the strength of the displacement - the brighter the stronger. The red keypoints serve as anchor points to visualise the proper slices along axial plane. We have used 2 stage CorrField with default hyperparameters. Both, Vox2Vox and U-Net models were trained on the NLST training set. The images are taken from validation set.</em></p>
 
-![Figure 2. The MSE boxplot of CorrField, U-Net, and Vox2Vox. The synthetic dataset has been used in order to assess all of the models.](./figures/Picture2.jpg)
 
-![Figure 3. 3D visualisation of generated DDFs for kidney with tumor (left) and Lung from NLST (right). These displacements show how voxels of both organs have moved from one CT scan to another.](./figures/Picture3.jpg)
+<p align='center'>
+    <img src='./figures/Picture2.png' alt='Figure 2' width='800'/>
+</p>
+<p align="center>"><em>The MSE boxplot of CorrField, U-Net, and Vox2Vox. The synthetic dataset has been used in order to assess all of the models.</em></p>
 
-![Figure4](./figures/Picture4.jpg)
+<p align="center">
+  <img src="./figures/Picture3.jpg" alt="Figure 3" width="45%" style="margin-right: 10px;"/>
+  <img src="./figures/Picture4.jpg" alt="Figure 4" width="45%"/>
+</p>
+<p align="center">
+  <em><strong>Figure 3.</strong> 3D visualisation of generated DDFs for kidney with tumor (left) and Lung from NLST (right). These displacements show how voxels of both organs have moved from one CT scan to another.</em><br/>
+</p>
 
 ### Technical Architecture
 *Please describe the technical architecture (e.g, presented graphically, where the technical solution integration with the existing system can also be seen).*
