@@ -69,7 +69,7 @@ The solution is modular, scalable, and tightly integrated into the existing Bett
 
 
 <p align="center">
-  <img src="./figures/Picture3.jpg" alt="Figure 4" width="800"/>
+  <img src="./figures/Picture5.jpg" alt="Figure 4" width="800"/>
 </p>
 <p align="center">
   <em><strong>Figure 4.</strong> The technical workflow of the CO-VISION solution and its integration with the Better Medicine Viewer platform.</em><br/>
