@@ -59,6 +59,8 @@ Below we provide the visual results of our experiments.
   <em><strong>Figure 3.</strong> 3D visualisation of generated DDFs for kidney with tumor (left) and Lung from NLST (right). These displacements show how voxels of both organs have moved from one CT scan to another.</em><br/>
 </p>
 
+<br></br>
+
 ### Technical Architecture
 
 The process begins with the initial and follow-up CT scan, which are processed using AI-based registration models (CorrField, U-Net, or Vox2Vox) to compute a deformation matrix that aligns the scans.
