@@ -1,9 +1,9 @@
 # CO-VISION: a co-registration AI model validation on renal tumour CT scans
 
 ## Summary
-| Company Name | [Company](https://website.link) |
+| Company Name | [Better Medicine OÜ](https://bettermedicine.ai/) |
 | :--- | :--- |
-| Development Team Lead Name | Joonas Ariva |
+| Development Team Lead Name | [Joonas Ariva](https://ee.linkedin.com/in/joonas-ariva-7914a61b6) |
 | Development Team Lead E-mail | [joonas.ariva@ut.ee](mailto:joonas.ariva@ut.ee) |
 | Duration of the Demonstration Project | 8 months |
 | Final Report | [Example_report.pdf](./files/Demoprojekti_lõpparuanne_Final_Report.docx) |
