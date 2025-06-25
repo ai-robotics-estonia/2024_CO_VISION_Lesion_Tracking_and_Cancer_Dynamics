@@ -49,7 +49,7 @@ Below we provide the visual results of our experiments.
 <br/><br/>
 
 <p align='center'>
-    <img src='./figures/Picture2.jpg' alt='Figure 2' width='800'/>
+    <img src='./figures/Picture2.jpg' alt='Figure 2' width='600'/>
 </p>
 <p align="center"><em><strong>Figure 2.</strong> The MSE boxplot of CorrField, U-Net, and Vox2Vox. The synthetic dataset has been used in order to assess all of the models.</em></p>
 
