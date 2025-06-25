@@ -5,9 +5,9 @@
 ## Summary
 | Company Name | [Company](https://website.link) |
 | :--- | :--- |
-| Development Team Lead Name | [Dr. John Smith](https://profile.link) |
-| Development Team Lead E-mail | [email@example.com](mailto:email@example.com) |
-| Duration of the Demonstration Project | month/year-month/year |
+| Development Team Lead Name | Joonas Ariva |
+| Development Team Lead E-mail | [joonas.ariva@ut.ee](mailto:joonas.ariva@ut.ee) |
+| Duration of the Demonstration Project | 8 months |
 | Final Report | [Example_report.pdf](./files/Demoprojekti_lõpparuanne_Final_Report.docx) |
 
 ### Each project has an alternative for documentation
@@ -45,7 +45,12 @@ Later in the project, kidney data from the Tartu University Hospital (TUH) was i
 
 In our experiments, Vox2Vox performed better than U-Net, producing more accurate and anatomically plausible deformations.
 
-![Figure 1. Comparison of Dense Displacement Fields (DDF) produced by CorrField, Vox2Vox, and U-Net. The color of DDF shows the strength of the displacement - the brighter the stronger. The red keypoints serve as anchor points to visualise the proper slices along axial plane. We have used 2 stage CorrField with default hyperparameters. Both, Vox2Vox and U-Net models were trained on the NLST training set. The images are taken from validation set](./figures/Picture1.png)
+<!-- ![Figure 1. Comparison of Dense Displacement Fields (DDF) produced by CorrField, Vox2Vox, and U-Net. The color of DDF shows the strength of the displacement - the brighter the stronger. The red keypoints serve as anchor points to visualise the proper slices along axial plane. We have used 2 stage CorrField with default hyperparameters. Both, Vox2Vox and U-Net models were trained on the NLST training set. The images are taken from validation set](./figures/Picture1.png) -->
+
+<p align='center'>
+    <img src='./figures/Picture1.png' alt='Figure 1' width='600'/>
+</p>
+<p align="center>"><em>Comparison of Dense Displacement Fields (DDF) produced by CorrField, Vox2Vox, and U-Net. The color of DDF shows the strength of the displacement - the brighter the stronger. The red keypoints serve as anchor points to visualise the proper slices along axial plane. We have used 2 stage CorrField with default hyperparameters. Both, Vox2Vox and U-Net models were trained on the NLST training set. The images are taken from validation set.</em></p>
 
 ![Figure 2. The MSE boxplot of CorrField, U-Net, and Vox2Vox. The synthetic dataset has been used in order to assess all of the models.](./figures/Picture2.jpg)
 
