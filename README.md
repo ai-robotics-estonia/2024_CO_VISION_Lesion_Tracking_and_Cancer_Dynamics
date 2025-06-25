@@ -69,13 +69,15 @@ This deformation matrix enables co-registration, allowing for precise comparison
 
 The solution is modular, scalable, and tightly integrated into the existing Better Medicine platform, enabling advanced longitudinal analysis of CT scans in a clinical setting.
 
-
+<br></br>
 <p align="center">
   <img src="./figures/Picture5.png" alt="Figure 4" width="600"/>
 </p>
 <p align="center">
   <em><strong>Figure 4.</strong> The technical workflow of the CO-VISION solution and its integration with the Better Medicine Viewer platform.</em><br/>
 </p>
+
+<br></br>
 
 ### User Interface 
 
