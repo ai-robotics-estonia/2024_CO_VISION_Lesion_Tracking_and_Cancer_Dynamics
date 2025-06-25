@@ -1,4 +1,4 @@
-# [CO-VISION: a co-registration AI model validation on renal tumour CT scans]
+# CO-VISION: a co-registration AI model validation on renal tumour CT scans
 
 ## Summary
 | Company Name | [Company](https://website.link) |
