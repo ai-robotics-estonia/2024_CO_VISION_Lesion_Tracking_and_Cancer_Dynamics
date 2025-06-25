@@ -1,0 +1,23 @@
+experiment: 2D-segm
+
+lightning_module:
+  _target_: hydra.utils.get_class
+  path: lightning_modules.models.segmentation_module.LightningModule
+
+metric:
+  threshold: 0.5
+
+seed: 42
+
+defaults:
+  - loss: focal_deep
+  - model: unetplusplus_DS_2D_add_input
+  - datamodule: one_click_2D
+  - optimizer: adam
+  - logger: tb_logger
+  - scheduling: scheduler_2D
+  - trainer: default_trainer
+  - hydra: default_hydra
+  - override hydra/hydra_logging: disabled
+  # allows to override any parameter from this config
+  - _self_

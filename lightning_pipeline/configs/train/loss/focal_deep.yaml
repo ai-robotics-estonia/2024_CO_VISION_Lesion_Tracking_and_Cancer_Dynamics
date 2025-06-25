@@ -1,0 +1,7 @@
+_target_: losses.deep_sv_loss.DeepSupervisionBinaryFocalLoss
+_recursive_: true
+_convert_: all
+
+focal_loss_fn:
+  _target_: pytorch_toolbelt.losses.BinaryFocalLoss
+  gamma: 1   # default value is gamma=2, gamma=1 is BCE

@@ -1,0 +1,5 @@
+_target_: losses.registration_loss.RegMultiTargetLoss
+lam_t: 0.5
+lam_m: 0.1
+lam_r: 0.1
+lam_l: 0.3

@@ -1,0 +1,18 @@
+_recursive_: true
+_convert_: all
+
+early_stopping_patience: 250
+
+scheduler:
+  _target_: torch.optim.lr_scheduler.CosineAnnealingLR
+  T_max: ${scheduling.epochs}
+
+additional_params:
+  interval: epoch
+  frequency: 1
+
+check_val_every_n_epoch: 5
+epochs: 500
+
+defaults:
+  - callbacks: callbacks_reg

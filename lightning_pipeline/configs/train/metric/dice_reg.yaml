@@ -1,0 +1,4 @@
+_target_: monai.metrics.DiceMetric
+include_background: true
+reduction: mean
+get_not_nans: false

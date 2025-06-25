@@ -1,0 +1,235 @@
+_recursive_: true
+_convert_: all
+
+image_key: image
+box_key: box
+label_key: label
+
+pred_score_key: pred_score
+pred_box_key: pred_box
+pred_label_key: pred_label
+
+neg_samples: 1
+
+intensity_transform:
+  _target_: monai.transforms.ScaleIntensityRanged
+  keys: ${datamodule.config.transforms.image_key}
+  a_min: -1024.0
+  a_max: 500.0    # 300 monai default for luna
+  b_min: 0.0
+  b_max: 1.0
+  clip: true
+
+preprocessing_transforms:
+  _target_: monai.transforms.Compose
+  transforms: 
+    - _target_:  monai.transforms.LoadImaged
+      keys: ${datamodule.config.transforms.image_key}
+      meta_key_postfix: meta_dict
+    - _target_:  monai.transforms.EnsureChannelFirstd
+      keys: ${datamodule.config.transforms.image_key}
+      # meta_key_postfix: meta_dict
+    - _target_: monai.transforms.EnsureTyped
+      keys: 
+        - ${datamodule.config.transforms.image_key}
+        - ${datamodule.config.transforms.box_key}
+      dtype:
+        _target_: hydra.utils.get_object
+        path: torch.float32
+    - _target_: monai.transforms.EnsureTyped
+      keys: ${datamodule.config.transforms.label_key}
+      dtype:
+        _target_: hydra.utils.get_object
+        path: torch.long
+    - _target_: monai.apps.detection.transforms.dictionary.StandardizeEmptyBoxd
+      box_keys: 
+        - ${datamodule.config.transforms.box_key}
+      box_ref_image_keys: ${datamodule.config.transforms.image_key}
+    # Orientationd (axcodes: RAS) was excluded from preprocessing transform
+    - ${datamodule.config.transforms.intensity_transform}
+    - _target_: monai.transforms.EnsureTyped
+      keys:
+        - ${datamodule.config.transforms.image_key}
+      dtype:
+        _target_: hydra.utils.get_object
+        path: torch.float16
+    - _target_: monai.apps.detection.transforms.dictionary.ConvertBoxToStandardModed
+      box_keys: ${datamodule.config.transforms.box_key}
+      mode: xyzxyz      # default: cccwhd
+    # AffineBoxToImageCoordinated was excluded from preprocessing transform
+              
+random_transforms:
+  _target_: monai.transforms.Compose
+  transforms: 
+    - _target_: monai.apps.detection.transforms.dictionary.RandCropBoxByPosNegLabeld
+      image_keys: ${datamodule.config.transforms.image_key}
+      box_keys: ${datamodule.config.transforms.box_key}
+      label_keys: ${datamodule.config.transforms.label_key}
+      spatial_size: ${datamodule.config.patch_size}
+      whole_box: true
+      num_samples: ${datamodule.config.batch_size}
+      pos: 1
+      neg: ${datamodule.config.transforms.neg_samples}
+    - _target_: monai.apps.detection.transforms.dictionary.RandZoomBoxd
+      image_keys: ${datamodule.config.transforms.image_key}
+      box_keys: ${datamodule.config.transforms.box_key}
+      label_keys: ${datamodule.config.transforms.label_key}
+      box_ref_image_keys: ${datamodule.config.transforms.image_key}
+      prob: 0.2
+      min_zoom: 0.7
+      max_zoom: 1.4
+      padding_mode: constant
+      keep_size: true
+    - _target_: monai.apps.detection.transforms.dictionary.ClipBoxToImaged
+      box_keys: ${datamodule.config.transforms.box_key}
+      label_keys: ${datamodule.config.transforms.label_key}
+      box_ref_image_keys: ${datamodule.config.transforms.image_key}
+      remove_empty: true
+    - _target_: monai.apps.detection.transforms.dictionary.RandFlipBoxd
+      image_keys: ${datamodule.config.transforms.image_key}
+      box_keys: ${datamodule.config.transforms.box_key}
+      box_ref_image_keys: ${datamodule.config.transforms.image_key}
+      prob: 0.5
+      spatial_axis: 0
+    - _target_: monai.apps.detection.transforms.dictionary.RandFlipBoxd
+      image_keys: ${datamodule.config.transforms.image_key}
+      box_keys: ${datamodule.config.transforms.box_key}
+      box_ref_image_keys: ${datamodule.config.transforms.image_key}
+      prob: 0.5
+      spatial_axis: 1
+    - _target_: monai.apps.detection.transforms.dictionary.RandFlipBoxd
+      image_keys: ${datamodule.config.transforms.image_key}
+      box_keys: ${datamodule.config.transforms.box_key}
+      box_ref_image_keys: ${datamodule.config.transforms.image_key}
+      prob: 0.5
+      spatial_axis: 2
+    - _target_: monai.apps.detection.transforms.dictionary.RandRotateBox90d
+      image_keys: ${datamodule.config.transforms.image_key}
+      box_keys: ${datamodule.config.transforms.box_key}
+      box_ref_image_keys: ${datamodule.config.transforms.image_key}
+      prob: 0.75
+      max_k: 3
+      spatial_axes: [0, 1]
+    - _target_: monai.apps.detection.transforms.dictionary.BoxToMaskd
+      box_keys: ${datamodule.config.transforms.box_key}
+      label_keys: ${datamodule.config.transforms.label_key}
+      box_mask_keys: box_mask
+      box_ref_image_keys: ${datamodule.config.transforms.image_key}
+      min_fg_label: 0
+      ellipse_mask: true
+    - _target_: monai.transforms.RandRotated
+      keys: 
+        - ${datamodule.config.transforms.image_key}
+        - box_mask
+      mode: ['nearest', 'nearest']
+      prob: 0.2
+      range_x: 0.5236
+      range_y: 0.5236
+      range_z: 0.5236
+      keep_size: true
+      padding_mode: zeros
+    - _target_: monai.apps.detection.transforms.dictionary.MaskToBoxd
+      box_keys: ${datamodule.config.transforms.box_key}
+      label_keys: ${datamodule.config.transforms.label_key}
+      box_mask_keys: box_mask
+      min_fg_label: 0
+    - _target_: monai.transforms.DeleteItemsd
+      keys: box_mask
+    - _target_: monai.transforms.RandGaussianNoised
+      keys: ${datamodule.config.transforms.image_key}
+      prob: 0.1
+      mean: 0.0
+      std: 0.1
+    - _target_: monai.transforms.RandGaussianSmoothd
+      keys: ${datamodule.config.transforms.image_key}
+      prob: 0.1
+      sigma_x: [0.5, 1.0]
+      sigma_y: [0.5, 1.0]
+      sigma_z: [0.5, 1.0]
+    - _target_: monai.transforms.RandScaleIntensityd
+      keys: ${datamodule.config.transforms.image_key}
+      factors: 0.25
+      prob: 0.15
+    - _target_: monai.transforms.RandShiftIntensityd
+      keys: ${datamodule.config.transforms.image_key}
+      offsets: 0.1
+      prob: 0.15
+    - _target_: monai.transforms.RandAdjustContrastd
+      keys: ${datamodule.config.transforms.image_key}
+      prob: 0.3
+      gamma: [0.7, 1.5]
+
+final_transforms:
+  _target_: monai.transforms.Compose
+  transforms: 
+    - _target_: monai.transforms.EnsureTyped
+      keys:
+        - ${datamodule.config.transforms.image_key}
+        - ${datamodule.config.transforms.box_key}
+      dtype:
+        _target_: hydra.utils.get_object
+        path: torch.float16
+    - _target_: monai.transforms.EnsureTyped
+      keys: ${datamodule.config.transforms.label_key}
+      dtype:
+        _target_: hydra.utils.get_object
+        path: torch.long
+    # - _target_: monai.transforms.ToTensord
+    #   keys:
+    #     - ${datamodule.config.transforms.image_key}
+    #     - ${datamodule.config.transforms.box_key}
+    #     - ${datamodule.config.transforms.label_key}
+
+train_transforms:
+  _target_: monai.transforms.Compose
+  transforms: 
+    - ${datamodule.config.transforms.preprocessing_transforms}
+    - ${datamodule.config.transforms.random_transforms}
+    - ${datamodule.config.transforms.final_transforms}
+
+val_transforms:
+  _target_: monai.transforms.Compose
+  transforms: 
+    - ${datamodule.config.transforms.preprocessing_transforms}
+    - ${datamodule.config.transforms.final_transforms}
+
+test_transforms:
+  _target_: monai.transforms.Compose
+  transforms: 
+    - _target_:  monai.transforms.LoadImaged
+      keys: ${datamodule.config.transforms.image_key}
+      meta_key_postfix: meta_dict
+    - _target_:  monai.transforms.EnsureChannelFirstd
+      keys: ${datamodule.config.transforms.image_key}
+    - _target_: monai.transforms.EnsureTyped
+      keys: 
+        - ${datamodule.config.transforms.image_key}
+        - ${datamodule.config.transforms.box_key}
+      dtype:
+        _target_: hydra.utils.get_object
+        path: torch.float32
+      allow_missing_keys: true
+    # Orientationd (axcodes: RAS) was excluded from test transform
+    # to keep predictions in image coordinates w/o flipping
+    - ${datamodule.config.transforms.intensity_transform}
+    - _target_: monai.transforms.EnsureTyped
+      keys:
+        - ${datamodule.config.transforms.image_key}
+      dtype:
+        _target_: hydra.utils.get_object
+        path: torch.float16
+   
+test_postproc_transforms:
+  _target_: monai.transforms.Compose
+  transforms: 
+    - _target_: monai.apps.detection.transforms.dictionary.ClipBoxToImaged
+      box_keys: ${datamodule.config.transforms.pred_box_key}
+      label_keys: 
+        - ${datamodule.config.transforms.pred_label_key}
+        - ${datamodule.config.transforms.pred_score_key}
+      box_ref_image_keys: ${datamodule.config.transforms.image_key}
+      remove_empty: true
+    # AffineBoxToWorldCoordinated was excluded from test transform 
+    # it introduced additional re-sampling which caused wrong predictions
+    - _target_: monai.transforms.DeleteItemsd
+      keys: ${datamodule.config.transforms.image_key}

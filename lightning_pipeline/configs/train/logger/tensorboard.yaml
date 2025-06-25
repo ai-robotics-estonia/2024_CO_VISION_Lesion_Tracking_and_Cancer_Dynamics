@@ -1,0 +1,5 @@
+tensorboard:
+  _target_: pytorch_lightning.loggers.TensorBoardLogger
+  save_dir: lightning_logs
+  name: ${experiment}
+  default_hp_metric: False

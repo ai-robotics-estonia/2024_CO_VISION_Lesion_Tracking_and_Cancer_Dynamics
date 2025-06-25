@@ -1,0 +1,27 @@
+batch_size: 128
+# if None, num_workers = cpu_count() - 1
+num_workers: 32
+
+deep_supervision: ${model.deep_supervision}
+n_deep_sv_stages: ${model.n_deep_sv_stages}
+
+split: split/split.json
+
+train_subset: train
+val_subset: val
+
+axes:
+  # TODO: check the order: [sagittal, coronal] or [coronal, sagittal]
+  train: [0, 1, 2]    # [sagittal, coronal, axial]
+  val: [2]            # axial only
+
+dataset:
+  _target_: dataset.dataset.OneclickDataset
+  add_input: ${datamodule.config.add_input} 
+  ndim: 2     # 2 for 2D; 3 for 3D
+  deep_sv_stages: ${datamodule.config.n_deep_sv_stages}
+
+defaults:
+  - add_input: two_click_add_input
+  - dataloaders: default_dataloaders
+  - transforms: default_transforms

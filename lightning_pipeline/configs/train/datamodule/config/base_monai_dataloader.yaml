@@ -1,0 +1,28 @@
+batch_size: 4
+num_workers: 10
+
+patch_size: [80, 80, 80]
+val_patch_size: [512, 512, 192]
+
+filtering:
+  gt:
+    _target_: lightning_modules.utils.filtering.AnnotFiltering
+    size_thr: 0.0
+    mapping_list: [[0, 1], [2, 4]]    # [Solid, Juxtapl], [w/ Bening, PartSolid]
+    is_pred: False
+    skip_empty: True
+  pred:
+    _target_: lightning_modules.utils.filtering.AnnotFiltering
+    size_thr: 0.0
+    mapping_list: []  # there is no need for mapping predictions for general case
+    is_pred: True
+    skip_empty: False
+
+train_datalists_path: split/split_full_09022024.json
+
+defaults:
+  - dataloaders: monai_dataloaders
+  - transforms: base_monai_transforms
+  # - datasets: dataset_phase_2_multiclass
+  - _self_
+  

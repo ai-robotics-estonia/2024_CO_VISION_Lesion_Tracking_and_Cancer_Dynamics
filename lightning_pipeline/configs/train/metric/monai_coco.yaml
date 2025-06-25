@@ -1,0 +1,4 @@
+_target_: monai.apps.detection.metrics.coco.COCOMetric
+classes: ['nodule']
+iou_list: [0.1]
+max_detection: [100]

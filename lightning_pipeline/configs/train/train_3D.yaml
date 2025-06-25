@@ -1,0 +1,23 @@
+experiment: 3D-segm-testing
+
+lightning_module:
+  _target_: hydra.utils.get_class
+  path: lightning_modules.models.segmentation_module.LightningModule
+
+metric:
+  threshold: 0.5
+
+seed:
+
+defaults:
+  - loss: focal_deep
+  - model: residual_unet_3D
+  - datamodule: one_click_3D
+  - optimizer: adam
+  - logger: loggers
+  - scheduling: scheduler_3D
+  - trainer: default_trainer
+  - hydra: default_hydra
+  - override hydra/hydra_logging: disabled
+  # allows to override any parameter from this config
+  - _self_

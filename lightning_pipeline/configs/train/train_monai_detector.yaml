@@ -1,0 +1,25 @@
+experiment: retinanet-monai-phase2
+
+seed_monai: 0
+
+lightning_module:
+  _target_: hydra.utils.get_class
+  path: lightning_modules.models.monai_detection_module.MonaiDetectionModule
+
+# maxpool3d is not deterministic
+# seed: 42
+
+defaults:
+  - model: retinanet_monai
+  - datamodule: monai_detection_datamodule
+  - optimizer: sgd
+  - metric: monai_coco
+  - loss: monai_detection_loss
+  - logger: loggers
+  - scheduling: step_lr_with_warmup
+  - trainer: default_trainer
+  - hydra: default_hydra
+  - override hydra/hydra_logging: disabled
+  # allows to override any parameter from this config
+  - _self_
+  

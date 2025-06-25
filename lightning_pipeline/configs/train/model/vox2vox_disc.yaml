@@ -1,0 +1,2 @@
+__target__: models.vox2vox.Discriminator
+in_channels: 1

@@ -1,0 +1,104 @@
+_recursive_: true
+_convert_: all
+
+image_key: image
+label_key: mask
+
+normalize:
+  _target_: monai.transforms.NormalizeIntensityd
+  keys: ${datamodule.config.transforms.image_key}
+  subtrahend: 0.449
+  divisor: 0.226
+  
+train_transforms:
+  _target_: monai.transforms.Compose
+  transforms: 
+    # MONAI augs require first dim to be channel even if it's 1
+    - _target_:  monai.transforms.EnsureChannelFirstd
+      keys: 
+        - ${datamodule.config.transforms.image_key}
+        - ${datamodule.config.transforms.label_key}
+      channel_dim: no_channel
+    # - ${datamodule.config.transforms.normalize}
+    - _target_: monai.transforms.RandFlipd
+      keys: 
+        - ${datamodule.config.transforms.image_key}
+        - ${datamodule.config.transforms.label_key}
+      prob: 0.1
+      spatial_axis: 0
+    - _target_: monai.transforms.RandFlipd
+      keys: 
+        - ${datamodule.config.transforms.image_key}
+        - ${datamodule.config.transforms.label_key}
+      prob: 0.1
+      spatial_axis: 1
+    - _target_: monai.transforms.RandFlipd
+      keys: 
+        - ${datamodule.config.transforms.image_key}
+        - ${datamodule.config.transforms.label_key}
+      prob: 0.1
+      spatial_axis: 2
+    - _target_: monai.transforms.RandRotate90d
+      keys: 
+        - ${datamodule.config.transforms.image_key}
+        - ${datamodule.config.transforms.label_key}
+      prob: 0.1
+      spatial_axes: [0, 1]
+    - _target_: monai.transforms.RandRotated
+      keys: 
+        - ${datamodule.config.transforms.image_key}
+        - ${datamodule.config.transforms.label_key}
+      mode: ['nearest', 'nearest']
+      prob: 0.2
+      range_x: 0.5236
+      range_y: 0.5236
+      range_z: 0.5236
+      keep_size: true
+      padding_mode: zeros
+    - _target_: monai.transforms.RandZoomd
+      keys: 
+        - ${datamodule.config.transforms.image_key}
+        - ${datamodule.config.transforms.label_key}
+      prob: 0.2
+      min_zoom: 0.7
+      max_zoom: 1.4
+      padding_mode: constant
+      keep_size: true
+    - _target_: monai.transforms.RandGaussianNoised
+      keys: ${datamodule.config.transforms.image_key}
+      prob: 0.1
+      mean: 0.0
+      std: 0.1
+    - _target_: monai.transforms.RandGaussianSmoothd
+      keys: ${datamodule.config.transforms.image_key}
+      prob: 0.1
+      sigma_x: [0.5, 1.0]
+      sigma_y: [0.5, 1.0]
+      sigma_z: [0.5, 1.0]
+    - _target_: monai.transforms.RandScaleIntensityd
+      keys: ${datamodule.config.transforms.image_key}
+      factors: 0.25
+      prob: 0.15
+    - _target_: monai.transforms.RandShiftIntensityd
+      keys: ${datamodule.config.transforms.image_key}
+      offsets: 0.1
+      prob: 0.15
+    - _target_: monai.transforms.RandAdjustContrastd
+      keys: ${datamodule.config.transforms.image_key}
+      prob: 0.3
+      gamma: [0.7, 1.5]
+    
+    
+
+test_transforms:
+  _target_: monai.transforms.Compose
+  transforms:
+    # - _target_:  monai.transforms.EnsureChannelFirstd
+    #   keys: ${datamodule.config.transforms.image_key}
+    #   channel_dim: no_channel
+    # - ${datamodule.config.transforms.normalize}
+    - _target_: monai.transforms.Identityd
+      keys: 
+        - ${datamodule.config.transforms.image_key}
+        - ${datamodule.config.transforms.label_key}
+

@@ -1,0 +1,47 @@
+batch_size: 8
+num_workers: 8
+cache_rate: 1.0
+
+
+# ----------------- TUH -----------------
+
+# data_dir: /gpfs/space/projects/BetterMedicine/illia/bm-ai-pipelines/data/datasets/TUH/dl_subset_clean_preprocessed.json
+# target_res: [256, 208, 256]
+# spatial_size: [-1, -1, -1,]  # for Resized transform, [-1, -1, -1] means no resizing, use this when training final model
+# translate_range:  25
+# vx: [1.5, 1.5, 1.5]
+
+# target_res: [128, 128, 128]
+# spatial_size: ${datamodule.config.target_res}
+# translate_range:  12.5  #  int(25 * target_res[0] / 256),
+# vx: [3, 2.43, 3]   # voxel size, 1.5 for TUH dataset without resizing
+
+# -----------------------------------------
+
+
+
+
+# ----------------- NLST -----------------
+
+data_dir: /gpfs/space/projects/BetterMedicine/illia/bm-ai-pipelines/common/ocs/lightning_pipeline/data/NLST
+# target_res: [224, 192, 224]
+# spatial_size: [-1, -1, -1,]  # for Resized transform, [-1, -1, -1] means no resizing, use this when training final model
+# translate_range:  25
+# vx: [1.5, 1.5, 1.5]
+
+target_res: [96, 96, 96]
+spatial_size: ${datamodule.config.target_res}
+translate_range:  10  #  int(25 * target_res[0] / 224),
+vx: [3.5, 3, 3.5]   # voxel size, 1.5 for NLST dataset without resizing
+
+# target_res: [128, 128, 128]
+# spatial_size: ${datamodule.config.target_res}
+# translate_range:  14.2857  #  int(25 * target_res[0] / 224),
+# vx: [2.625, 2.25, 2.625]   # voxel size, 1.5 for NLST dataset without resizing
+
+# -----------------------------------------
+
+defaults:
+  - dataloaders: registration_dataloaders
+  - transforms: base_registration_transforms_keypoints
+  - _self_

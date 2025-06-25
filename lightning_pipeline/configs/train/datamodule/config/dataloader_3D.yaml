@@ -1,0 +1,30 @@
+batch_size: 16
+# if None, num_workers = cpu_count() - 1
+num_workers: 24
+
+deep_supervision: ${model.deep_supervision}
+n_deep_sv_stages: ${model.n_deep_sv_stages}
+
+split: split/split_3D.json
+
+train_subset: train
+val_subset: val
+# TODO: add test subset, temporarily use val subset
+test_subset: val
+
+dataset:
+  _target_: dataset.dataset.OneclickDataset
+  add_input: ${datamodule.config.add_input} 
+  ndim: 3     # 2 for 2D; 3 for 3D
+  deep_sv_stages: ${datamodule.config.n_deep_sv_stages}
+
+# override
+add_input:
+  prob_jitter: 0.3
+
+defaults:
+  - add_input: six_points_3D_input
+  - transforms: segmentation_monai_transforms
+  - dataloaders: default_dataloaders
+  - _self_
+  

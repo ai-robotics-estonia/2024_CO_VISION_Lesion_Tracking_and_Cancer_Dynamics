@@ -1,0 +1,4 @@
+_target_: losses.registration_loss.GradICONLoss
+lambda_gradicon: 0.7
+lambda_dice: 0.2
+lambda_lncc: 0.1

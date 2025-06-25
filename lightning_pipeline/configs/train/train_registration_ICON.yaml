@@ -1,0 +1,25 @@
+experiment: registration_NLST_ICON
+
+lightning_module:
+  _target_: hydra.utils.get_class
+  path: lightning_modules.models.registration_module.ICL_Reg
+
+seed: 0
+seed_monai: 0
+use_low_prec_matmul: true # set true for A100 GPU for faster training
+
+pretrain_ckpt: /gpfs/space/projects/BetterMedicine/illia/bm-ai-pipelines/common/ocs/lightning_pipeline/lightning_logs/registration_NLST_ICON/version_11/checkpoints/epoch=469-val_tre=3.123-val_dice=0.978.ckpt
+
+defaults:
+  - loss: registration_icon
+  - model: registration_unet
+  - datamodule: registration_datamodule
+  - optimizer: adam_reg
+  - metric: dice_reg
+  - logger: loggers
+  - scheduling: scheduler_reg
+  - trainer: default_trainer
+  - hydra: default_hydra
+  - override hydra/hydra_logging: disabled
+  # allows to override any parameter from this config
+  - _self_

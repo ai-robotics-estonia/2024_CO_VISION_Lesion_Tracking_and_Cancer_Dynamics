@@ -1,0 +1,139 @@
+_recursive_: true
+_convert_: all
+
+moving_image_key: moving_image
+fixed_image_key: fixed_image
+moving_label_key: moving_label
+fixed_label_key: fixed_label
+fixed_keypoints_key: fixed_keypoints
+moving_keypoints_key: moving_keypoints
+
+
+intensity_transform:
+  _target_: monai.transforms.ScaleIntensityRanged
+  keys: 
+    - ${datamodule.config.transforms.fixed_image_key}
+    - ${datamodule.config.transforms.moving_image_key}
+  a_min: -1200.0 
+  a_max: 400.0
+  b_min: 0.0
+  b_max: 1.0
+  clip: true
+
+# cachedataset doesnt work if Compose is nested, so train and val transforms are almost duplicates       
+train_transforms:
+  _target_: monai.transforms.Compose
+  transforms: 
+    - _target_:  monai.transforms.LoadImaged
+      keys: 
+        - ${datamodule.config.transforms.fixed_image_key}
+        - ${datamodule.config.transforms.moving_image_key}
+        - ${datamodule.config.transforms.fixed_label_key}
+        - ${datamodule.config.transforms.moving_label_key}
+      ensure_channel_first: true
+    - _target_: dataset.registration.transforms.LoadKeypointsd
+      keys:
+        - ${datamodule.config.transforms.fixed_keypoints_key}
+        - ${datamodule.config.transforms.moving_keypoints_key}
+    - ${datamodule.config.transforms.intensity_transform}
+    - _target_: monai.transforms.Resized
+      keys: 
+        - ${datamodule.config.transforms.fixed_image_key}
+        - ${datamodule.config.transforms.moving_image_key}
+        - ${datamodule.config.transforms.fixed_label_key}
+        - ${datamodule.config.transforms.moving_label_key}
+      mode:
+        - trilinear
+        - trilinear
+        - nearest
+        - nearest
+      align_corners: 
+        - true
+        - true
+        - null
+        - null
+      spatial_size: ${datamodule.config.spatial_size}
+    - _target_: monai.transforms.RandAffined
+      keys: 
+        - ${datamodule.config.transforms.fixed_image_key}
+        - ${datamodule.config.transforms.moving_image_key}
+        - ${datamodule.config.transforms.fixed_label_key}
+        - ${datamodule.config.transforms.moving_label_key}
+      mode:
+        - bilinear
+        - bilinear
+        - nearest
+        - nearest
+      prob: 0.8
+      shear_range: 0.2
+      translate_range: ${datamodule.config.translate_range}
+      rotate_range: 0.26179939 # np.pi / 180 * 15,
+      scale_range: 0.2
+      padding_mode:
+        - zeros
+        - zeros
+        - zeros
+        - zeros
+    - _target_: monai.transforms.RandGaussianNoised
+      keys: 
+        - ${datamodule.config.transforms.fixed_image_key}
+        - ${datamodule.config.transforms.moving_image_key}
+      prob: 0.1
+      mean: 0.0
+      std: 0.1
+    - _target_: monai.transforms.RandGaussianSmoothd
+      keys: 
+        - ${datamodule.config.transforms.fixed_image_key}
+        - ${datamodule.config.transforms.moving_image_key}
+      prob: 0.1
+      sigma_x: [0.5, 1.0]
+      sigma_y: [0.5, 1.0]
+      sigma_z: [0.5, 1.0]
+    - _target_: dataset.registration.transforms.TransformKeypointsd
+      keys_keypoints:
+        - ${datamodule.config.transforms.fixed_keypoints_key}
+        - ${datamodule.config.transforms.moving_keypoints_key}
+      keys_images:
+        - ${datamodule.config.transforms.fixed_image_key}
+        - ${datamodule.config.transforms.moving_image_key}
+
+val_transforms:
+  _target_: monai.transforms.Compose
+  transforms: 
+    - _target_:  monai.transforms.LoadImaged
+      keys: 
+        - ${datamodule.config.transforms.fixed_image_key}
+        - ${datamodule.config.transforms.moving_image_key}
+        - ${datamodule.config.transforms.fixed_label_key}
+        - ${datamodule.config.transforms.moving_label_key}
+      ensure_channel_first: true
+    - _target_: dataset.registration.transforms.LoadKeypointsd
+      keys:
+        - ${datamodule.config.transforms.fixed_keypoints_key}
+        - ${datamodule.config.transforms.moving_keypoints_key}
+    - ${datamodule.config.transforms.intensity_transform}
+    - _target_: monai.transforms.Resized
+      keys: 
+        - ${datamodule.config.transforms.fixed_image_key}
+        - ${datamodule.config.transforms.moving_image_key}
+        - ${datamodule.config.transforms.fixed_label_key}
+        - ${datamodule.config.transforms.moving_label_key}
+      mode:
+        - trilinear
+        - trilinear
+        - nearest
+        - nearest
+      align_corners: 
+        - true
+        - true
+        - null
+        - null
+      spatial_size: ${datamodule.config.spatial_size}
+    - _target_: dataset.registration.transforms.TransformKeypointsd
+      keys_keypoints:
+        - ${datamodule.config.transforms.fixed_keypoints_key}
+        - ${datamodule.config.transforms.moving_keypoints_key}
+      keys_images:
+        - ${datamodule.config.transforms.fixed_image_key}
+        - ${datamodule.config.transforms.moving_image_key}
+

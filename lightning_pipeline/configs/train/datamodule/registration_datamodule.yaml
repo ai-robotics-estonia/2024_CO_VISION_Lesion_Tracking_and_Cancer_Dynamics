@@ -1,0 +1,6 @@
+_target_: lightning_modules.datamodules.registration_datamodule.RegistrationDataModule
+_recursive_: false
+
+defaults:
+  - _self_
+  - config: base_registration_dataloader

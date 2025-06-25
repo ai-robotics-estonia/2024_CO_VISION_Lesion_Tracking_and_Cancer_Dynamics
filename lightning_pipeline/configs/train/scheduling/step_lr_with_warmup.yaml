@@ -1,0 +1,25 @@
+monitor: val_coco
+monitor_mode: max
+save_filename: '{epoch}-{val_coco:.3f}'
+early_stopping_patience: 300
+
+scheduler:
+  _target_: pytorch_toolbelt.optimization.lr_schedules.GradualWarmupScheduler
+  _recursive_: false
+  multiplier: 1
+  total_epoch: 10
+  after_scheduler:
+    _target_: torch.optim.lr_scheduler.StepLR
+    step_size: 160
+    gamma: 0.1
+
+additional_params:
+  interval: epoch
+  frequency: 1
+
+check_val_every_n_epoch: 5
+epochs: 300
+
+defaults:
+  - callbacks: default_callbacks
+

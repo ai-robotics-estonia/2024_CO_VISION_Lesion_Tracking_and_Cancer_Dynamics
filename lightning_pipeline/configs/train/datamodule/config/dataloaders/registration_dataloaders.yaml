@@ -1,0 +1,29 @@
+train_dataloader:
+  _target_: monai.data.DataLoader
+  batch_size: ${datamodule.config.batch_size}
+  num_workers: ${datamodule.config.num_workers}
+  # persistent_workers: true
+  pin_memory: true
+  shuffle: True
+  collate_fn: 
+    _target_: hydra.utils.get_object
+    path: dataset.registration.utils.collate_fn
+
+val_dataloader:
+  _target_: monai.data.DataLoader
+  batch_size: ${datamodule.config.batch_size}
+  num_workers: ${datamodule.config.num_workers}
+  shuffle: False
+  # persistent_workers: true
+  pin_memory: true
+  collate_fn: 
+    _target_: hydra.utils.get_object
+    path: dataset.registration.utils.collate_fn
+test_dataloader:
+  _target_: monai.data.DataLoader
+  batch_size: ${datamodule.config.batch_size}
+  num_workers: ${datamodule.config.num_workers}
+  shuffle: False
+  collate_fn: 
+    _target_: hydra.utils.get_object
+    path: dataset.registration.utils.collate_fn

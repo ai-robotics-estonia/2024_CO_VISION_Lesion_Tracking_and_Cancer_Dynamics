@@ -1,0 +1,50 @@
+_recursive_: true
+_convert_: all
+
+normalize:
+    _target_: albumentations.Normalize
+    p: 1
+    always_apply: True
+    max_pixel_value: 1.0
+    mean: [0.449]
+    std: [0.226]
+
+# TODO: add resize/crop transform
+# train:
+#   size: &SIZE [128, 128]
+# val:
+#   size: *SIZE 
+
+train_transforms:
+    _target_: albumentations.Compose
+    p: 1
+    transforms:
+      - _target_: albumentations.RandomBrightnessContrast
+        contrast_limit: 0.3
+        brightness_limit: 0.3
+        p: 0.75
+      - _target_: albumentations.HorizontalFlip
+        p: 0.5
+      - _target_: albumentations.VerticalFlip
+        p: 0.5
+      - _target_: albumentations.Transpose
+        p: 0.5
+      - _target_: albumentations.ShiftScaleRotate
+        shift_limit: 0.1
+        scale_limit: 0.2
+        rotate_limit: 180
+        border_mode: 0
+        p: 0.85
+      - _target_: albumentations.GaussianBlur
+        blur_limit: [3, 3]
+        p: 0.5
+      # - ${dataloader.transforms.resize}
+      - ${datamodule.config.transforms.normalize}
+
+test_transforms:
+    _target_: albumentations.Compose
+    p: 1
+    transforms:
+      # - ${dataloader.transforms.resize}
+      - ${datamodule.config.transforms.normalize}
+
