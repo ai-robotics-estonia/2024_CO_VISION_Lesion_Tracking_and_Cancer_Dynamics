@@ -8,10 +8,6 @@
 | Duration of the Demonstration Project | 8 months |
 | Final Report | [Final_report.pdf](./files/Demoprojekti_lõpparuanne_Final_Report.docx) |
 
-### Each project has an alternative for documentation
-1. Fill in the [description](#description) directly in the README below *OR*;
-2. make a [custom agreement with the AIRE team](#custom-agreement-with-the-AIRE-team).
-
 # Description
 ## Objectives of the Demonstration Project
 
