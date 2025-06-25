@@ -6,7 +6,7 @@
 | Development Team Lead Name | [Joonas Ariva](https://ee.linkedin.com/in/joonas-ariva-7914a61b6) |
 | Development Team Lead E-mail | [joonas.ariva@ut.ee](mailto:joonas.ariva@ut.ee) |
 | Duration of the Demonstration Project | 8 months |
-| Final Report | [Example_report.pdf](./files/Demoprojekti_lõpparuanne_Final_Report.docx) |
+| Final Report | [Final_report.pdf](./files/Demoprojekti_lõpparuanne_Final_Report.docx) |
 
 ### Each project has an alternative for documentation
 1. Fill in the [description](#description) directly in the README below *OR*;
