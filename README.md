@@ -52,8 +52,8 @@ Below we provide the visual results of our experiments.
 <br/><br/>
 
 <p align="center">
-  <img src="./figures/Picture3.jpg" alt="Figure 3" width="40%" style="margin-right: 10px;"/>
-  <img src="./figures/Picture4.jpg" alt="Figure 4" width="40%"/>
+  <img src="./figures/Picture3.jpg" alt="Figure 3" width="47%" style="margin-right: 10px;"/>
+  <img src="./figures/Picture4.jpg" alt="Figure 4" width="47%"/>
 </p>
 <p align="center">
   <em><strong>Figure 3.</strong> 3D visualisation of generated DDFs for kidney with tumor (left) and Lung from NLST (right). These displacements show how voxels of both organs have moved from one CT scan to another.</em><br/>
