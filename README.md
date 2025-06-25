@@ -45,10 +45,9 @@ Later in the project, kidney data from the Tartu University Hospital (TUH) was i
 
 In our experiments, Vox2Vox performed better than U-Net, producing more accurate and anatomically plausible deformations.
 
-<!-- ![Figure 1. Comparison of Dense Displacement Fields (DDF) produced by CorrField, Vox2Vox, and U-Net. The color of DDF shows the strength of the displacement - the brighter the stronger. The red keypoints serve as anchor points to visualise the proper slices along axial plane. We have used 2 stage CorrField with default hyperparameters. Both, Vox2Vox and U-Net models were trained on the NLST training set. The images are taken from validation set](./figures/Picture1.png) -->
 
 <p align='center'>
-    <img src='./figures/Picture1.png' alt='Figure 1' width='600'/>
+    <img src='./figures/Picture1.png' alt='Figure 1' width='800'/>
 </p>
 <p align="center>"><em>Comparison of Dense Displacement Fields (DDF) produced by CorrField, Vox2Vox, and U-Net. The color of DDF shows the strength of the displacement - the brighter the stronger. The red keypoints serve as anchor points to visualise the proper slices along axial plane. We have used 2 stage CorrField with default hyperparameters. Both, Vox2Vox and U-Net models were trained on the NLST training set. The images are taken from validation set.</em></p>
 
