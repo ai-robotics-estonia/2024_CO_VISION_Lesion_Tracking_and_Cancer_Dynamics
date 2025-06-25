@@ -49,12 +49,12 @@ Below we provide the visual results of our experiments.
 <p align='center'>
     <img src='./figures/Picture1.png' alt='Figure 1' width='800'/>
 </p>
-<p align="center>"><em>Comparison of Dense Displacement Fields (DDF) produced by CorrField, Vox2Vox, and U-Net. The color of DDF shows the strength of the displacement - the brighter the stronger. The red keypoints serve as anchor points to visualise the proper slices along axial plane. We have used 2 stage CorrField with default hyperparameters. Both, Vox2Vox and U-Net models were trained on the NLST training set. The images are taken from validation set.</em></p>
+<p align="center>"><em><strong>Figure 1.</strong> Comparison of Dense Displacement Fields (DDF) produced by CorrField, Vox2Vox, and U-Net. The color of DDF shows the strength of the displacement - the brighter the stronger. The red keypoints serve as anchor points to visualise the proper slices along axial plane. We have used 2 stage CorrField with default hyperparameters. Both, Vox2Vox and U-Net models were trained on the NLST training set. The images are taken from validation set.</em></p>
 
 <p align='center'>
     <img src='./figures/Picture2.png' alt='Figure 2' width='600'/>
 </p>
-<p align="center>"><em>The MSE boxplot of CorrField, U-Net, and Vox2Vox. The synthetic dataset has been used in order to assess all of the models.</em></p>
+<p align="center"><em><strong>Figure 2.</strong> The MSE boxplot of CorrField, U-Net, and Vox2Vox. The synthetic dataset has been used in order to assess all of the models.</em></p>
 
 <p align="center">
   <img src="./figures/Picture3.jpg" alt="Figure 3" width="45%" style="margin-right: 10px;"/>
