@@ -5,18 +5,17 @@
 | :--- | :--- |
 | Development Team Lead Name | [Joonas Ariva](https://ee.linkedin.com/in/joonas-ariva-7914a61b6) |
 | Development Team Lead E-mail | [joonas.ariva@ut.ee](mailto:joonas.ariva@ut.ee) |
-| Duration of the Demonstration Project | 8 months |
-| Final Report | [Final_report.pdf](./files/Demoprojekti_lõpparuanne_Final_Report.docx) |
+| Duration of the Demonstration Project | August 2024 - May 2025 |
 
 # Description
 ## Objectives of the Demonstration Project
 
-The project aimed to demonstrate the feasibility and validate the performance of an AI-based co-registration model for longitudinal CT scans, initially focused on renal tumours. The objective was to build a system capable of accurately aligning multiple CT scans from the same patient acquired at different time points, enabling consistent comparison and tumour tracking. The demonstration focused on developing and benchmarking co-registration methods and building a synthetic validation pipeline.
+The project aimed to demonstrate the feasibility and validate the performance of an AI-based co-registration model for longitudinal CT scans, initially focused on renal tumours. The objective was to validate a system capable of accurately aligning multiple CT scans from the same patient acquired at different time points, enabling consistent comparison and tumour tracking. The demonstration focused on validating and benchmarking co-registration methods and building a synthetic validation pipeline.
 
 ## Activities and Results of the Demonstration Project
 ### Challenge
 
-The challenge addressed in the CO-VISION project was the difficulty and time consumption involved in comparing longitudinal CT scans, especially in the context of renal tumours. Due to limited availability of longitudinal kidney CT scan pairs at the start of the project, the development began with lung CT data, which was more accessible and enabled faster prototyping. This allowed the team to make significant progress in building and testing the core components of the system, including AI-based co-registration models and a custom synthetic data generation pipeline.
+The challenge addressed in the CO-VISION project was the difficulty and time consumption involved in comparing longitudinal CT scans, especially in the context of renal tumours. Due to limited availability of longitudinal kidney CT scan pairs at the start of the project, the project began with lung CT data, which was more accessible and enabled faster prototyping. This allowed the team to make significant progress in building and testing the core components of the system, including AI-based co-registration models and a custom synthetic data generation pipeline.
 
 Later in the project, kidney data from the Tartu University Hospital (TUH) was incorporated. Using the synthetic pipeline, we created simulated longitudinal kidney scans for validation. This shift aligned well with the original objective and demonstrated the generalizability of our approach. 
 
@@ -30,7 +29,7 @@ Later in the project, kidney data from the Tartu University Hospital (TUH) was i
 
 - The first algorithm used was CorrField, one of the most well-known classical deformable image registration algorithms in the field. CorrField is widely regarded for its robustness and has been proven effective in various medical imaging tasks. We showed that it works reliably on CT scans and used its output — the dense deformation fields (DDFs) — as supervision for training our first AI model.
 - The second algorithm used was purly Deep Learning approach, utilising a U-Net model. U-Net is one of the most established and widely adopted deep learning models in medical image analysis. It is known for its simplicity, efficiency, and high accuracy in various segmentation and prediction tasks. We adapted it to learn to predict the DDF directly from paired CT scans. Results showed that U-Net was capable of reproducing CorrField outputs, validating it as a strong baseline model for learned co-registration
-- The third algorithm used was another Deep Learning approach. We developed an AI model based on Vox2Vox architecture - a 3D generative adversarial network (GAN). Unlike U-Net, Vox2Vox does not rely on precomputed DDFs or keypoints from CorrField or any other algorithm. Instead, it uses a generator-discriminator setup to produce realistic DDFs directly. In our experiments, Vox2Vox performed better than U-Net, producing more accurate and anatomically plausible deformations.
+- The third algorithm used was another Deep Learning approach. We prepared an AI model based on Vox2Vox architecture - a 3D generative adversarial network (GAN). Unlike U-Net, Vox2Vox does not rely on precomputed DDFs or keypoints from CorrField or any other algorithm. Instead, it uses a generator-discriminator setup to produce realistic DDFs directly. In our experiments, Vox2Vox performed better than U-Net, producing more accurate and anatomically plausible deformations.
 
 ### Technological Results
 
@@ -95,9 +94,5 @@ Better Medicine team integrate the solution into the BMVision platform UI, where
 
 ### Lessons Learned
 
-The project confirmed the viability of AI-based co-registration for CT scans. While the switch to lung data at first was pragmatic due to better access to longitudional studies, the architecture has proven flexible and applicable to kidney tumors. The synthetic pipeline that we have developed prooved itself as a valuable asset for future testing and development. Initial goals were achieved, and the technical solution is already influencing the company’s product strategy.
+The project confirmed the viability of AI-based co-registration for CT scans. While the switch to lung data at first was pragmatic due to better access to longitudional studies, the architecture has proven flexible and applicable to kidney tumors. The synthetic pipeline that we have prepared prooved itself as a valuable asset for future testing and development. Initial goals were achieved, and the technical solution is already influencing the company’s product strategy.
 
-# Custom agreement with the AIRE team
-*If you have a unique project or specific requirements that don't fit neatly into the Docker file or description template options, we welcome custom agreements with our AIRE team. This option allows flexibility in collaborating with us to ensure your project's needs are met effectively.*
-
-*To explore this option, please contact our demonstration projects service manager via katre.eljas@taltech.ee with the subject line "Demonstration Project Custom Agreement Request - [Your Project Name]." In your email, briefly describe your project and your specific documentation or collaboration needs. Our team will promptly respond to initiate a conversation about tailoring a solution that aligns with your project goals.*
